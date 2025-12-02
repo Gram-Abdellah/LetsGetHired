@@ -19,7 +19,7 @@ try:
     # -------Process the data
     update_status_based_on_fields(db, collection_name, get_not_sent_today(db , collection_name))
 
-    process_applications(get_not_sent_ready_today(db, collection_name))
+    process_applications(get_not_sent_ready_today(db, collection_name), db, collection_name)
     time.sleep(10)
     get_and_reschedule_not_sent_today(db, collection_name)
 

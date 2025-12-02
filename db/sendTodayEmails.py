@@ -49,7 +49,8 @@ def send_email( sender_email, receiver_emails, subject, body, attachment_paths,
 
 
 
-def process_applications(data):
+def process_applications(data , db , collection_name):
+    col = db[collection_name]
     item = 1
 
     for d in data:
@@ -83,6 +84,11 @@ def process_applications(data):
         # Random number of minutes between 3 and 18
         minutes = random.randint(3, 10)
         seconds = minutes * 60
+
+        col.update_one(
+            {"_id": d["_id"]},          # filter by document ID
+            {"$set": {"Is_sent": "Sent"}} # update Is_sent field
+            )
         
         print(f"Sleeping for {minutes} minutes...")
         time.sleep(seconds)
