@@ -53,7 +53,7 @@ def get_not_sent_today(db ,collection_name):
         "Sending_date": today
     }
 
-    docs = list(col.find(query).limit(19))
+    docs = list(col.find(query))
     return docs
 
 def get_not_sent_ready_today(db ,collection_name):
@@ -72,7 +72,8 @@ def get_not_sent_ready_today(db ,collection_name):
         "Status": "ready",
     }
 
-    docs = list(col.find(query))
+    
+    docs = list(col.find(query).limit(19))
     return docs
  
 def update_status_based_on_fields(db, collection_name, docs):
