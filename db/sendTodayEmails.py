@@ -59,7 +59,7 @@ def process_applications(data , db , collection_name):
             time.sleep(180)
             item =0
         sender_email = "abdellahgram01@gmail.com"
-        receiver_email = "abdolahwidadi00@gmail.com" #[d['Email']]
+        receiver_email = [d['Email']]
         subject = d['Subject']
        
         # Load the email template from file
