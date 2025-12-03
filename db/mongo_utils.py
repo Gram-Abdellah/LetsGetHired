@@ -1,5 +1,6 @@
 from pymongo import MongoClient
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta 
+import os
 # -------------------------------
 # 1️⃣ Connect to MongoDB
 def get_db(uri="mongodb+srv://abdellahgram01_db_user:G3qStRgzhFZajEco@cluster0.yo1fmrw.mongodb.net/?appName=Cluster0",
@@ -126,3 +127,61 @@ def get_and_reschedule_not_sent_today(db, collection_name):
         col.update_one({"_id": doc["_id"]}, {"$set": {"Sending_date": tomorrow_str}})
 
     return docs
+
+def delete_today_sent_cover_letters(db, collection_name):
+    """
+    Find all documents where Is_sent = 'Sent' and Sending_date = today,
+    then delete the file located at doc['Cover_letter'].
+    """
+    col = db[collection_name]
+
+    # Today format MM/DD/YYYY — same format used in your DB
+    today = f"{datetime.now().month}/{datetime.now().day}/{datetime.now().year}"
+
+    # Query sent documents for today
+    query = {
+        "Is_sent": "Sent",
+        "Sending_date": today
+    }
+
+    docs = list(col.find(query))
+
+    if not docs:
+        print("No sent documents for today found.")
+        return
+
+    for d in docs:
+        file_path_cl = d.get("Cover_letter")
+        file_path_cv = d.get("Cover_letter")
+
+        if not file_path_cl:
+            print(f"Document {d.get('ID')} has no Cover_letter field.")
+            continue
+        if not file_path_cv:
+            print(f"Document {d.get('ID')} has no Resume field.")
+            continue
+
+        # Ensure correct path (strip spaces)
+        file_path_cl = file_path_cl.strip()
+        # Ensure correct path (strip spaces)
+        file_path_cv = file_path_cv.strip()
+
+        # Delete file if exists
+        if os.path.exists(file_path_cl):
+            try:
+                os.remove(file_path_cl)
+                print(f"Deleted cover letter: {file_path_cl}")
+            except Exception as e:
+                print(f"Error deleting {file_path_cl}: {e}")
+        else:
+            print(f"File not found: {file_path_cl}")
+        
+        # Delete file if exists
+        if os.path.exists(file_path_cv):
+            try:
+                os.remove(file_path_cv)
+                print(f"Deleted Resume: {file_path_cv}")
+            except Exception as e:
+                print(f"Error deleting {file_path_cv}: {e}")
+        else:
+            print(f"File not found: {file_path_cv}")

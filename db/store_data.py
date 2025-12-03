@@ -22,4 +22,4 @@ def csv_to_docs(csv_file_path):
     return docs
 
 #---------Storing by CSV file of new job application data
-store_doc_if_not_exists(collection_name, db, csv_to_docs("ApprovedLMIAData_Installation_Assembly_Manufacturing.csv"))
+store_doc_if_not_exists(collection_name, db, csv_to_docs("ApprovedLMIAData_Cleaners_(Industrial_and_Light_Duty).csv"))
