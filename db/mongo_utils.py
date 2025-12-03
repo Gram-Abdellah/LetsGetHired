@@ -152,19 +152,14 @@ def delete_today_sent_cover_letters(db, collection_name):
 
     for d in docs:
         file_path_cl = d.get("Cover_letter")
-        file_path_cv = d.get("Cover_letter")
 
         if not file_path_cl:
             print(f"Document {d.get('ID')} has no Cover_letter field.")
             continue
-        if not file_path_cv:
-            print(f"Document {d.get('ID')} has no Resume field.")
-            continue
+        
 
         # Ensure correct path (strip spaces)
         file_path_cl = file_path_cl.strip()
-        # Ensure correct path (strip spaces)
-        file_path_cv = file_path_cv.strip()
 
         # Delete file if exists
         if os.path.exists(file_path_cl):
@@ -175,13 +170,3 @@ def delete_today_sent_cover_letters(db, collection_name):
                 print(f"Error deleting {file_path_cl}: {e}")
         else:
             print(f"File not found: {file_path_cl}")
-        
-        # Delete file if exists
-        if os.path.exists(file_path_cv):
-            try:
-                os.remove(file_path_cv)
-                print(f"Deleted Resume: {file_path_cv}")
-            except Exception as e:
-                print(f"Error deleting {file_path_cv}: {e}")
-        else:
-            print(f"File not found: {file_path_cv}")
