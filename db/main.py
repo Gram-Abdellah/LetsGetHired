@@ -24,7 +24,5 @@ try:
     get_and_reschedule_not_sent_today(db, collection_name)
     time.sleep(10)
     delete_today_sent_cover_letters(db, collection_name)
-
-
 except Exception as e:
     print("Error during processing:", e)
