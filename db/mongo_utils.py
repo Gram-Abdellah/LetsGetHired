@@ -141,6 +141,8 @@ def delete_today_sent_cover_letters(db, collection_name):
     # Query sent documents for today
     query = {
         "Is_sent": "Sent",
+        "Sending_date": today,
+
     }
 
     docs = list(col.find(query))
