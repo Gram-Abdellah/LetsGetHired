@@ -1,8 +1,8 @@
 name: Run Daily Python Script
 
 on:
-  schedule:
-  workflow_dispatch:        # optional: allows manual trigger
+  workflow_dispatch:
+       # optional: allows manual trigger
 
 jobs:
   run-python:
